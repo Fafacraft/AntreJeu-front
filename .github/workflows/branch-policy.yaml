@@ -1,0 +1,44 @@
+name: Branch policy
+
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  branch-policy:
+    name: Validate branch promotion
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check source and target branches
+        env:
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+          TARGET_BRANCH: ${{ github.event.pull_request.base.ref }}
+        shell: bash
+        run: |
+          echo "Source: $SOURCE_BRANCH"
+          echo "Target: $TARGET_BRANCH"
+
+          if [[ "$TARGET_BRANCH" == "main" ]]; then
+            if [[ "$SOURCE_BRANCH" != "staging" ]]; then
+              echo "::error::Only staging can be merged into main."
+              exit 1
+            fi
+          elif [[ "$TARGET_BRANCH" == "staging" ]]; then
+            echo "Merge into staging is allowed."
+          else
+            echo "No branch policy defined for target '$TARGET_BRANCH'."
+          fi
+
+          echo "Branch promotion is valid."
