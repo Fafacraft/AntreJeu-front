@@ -10,6 +10,11 @@ RUN npm ci
 
 # Copy source and create the production build
 COPY . .
+
+# Set environment variables for vite build-time configuration
+ARG VITE_SENTRY_DSN
+ENV VITE_SENTRY_DSN=$VITE_SENTRY_DSN
+
 RUN npm run build
 
 
@@ -17,7 +22,6 @@ RUN npm run build
 FROM nginx:alpine AS runner
 
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY docker/nginx/frontend.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
