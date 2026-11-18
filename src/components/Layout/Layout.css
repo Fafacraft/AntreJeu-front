@@ -1,0 +1,19 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* Main body: grows to push the footer down on short pages */
+.layout__main {
+  flex: 1;
+  padding-block: var(--space-6);
+}
+
+.layout__footer {
+  padding-block: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
