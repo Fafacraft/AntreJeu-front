@@ -1,0 +1,55 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--navbar-height);
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  height: 100%;
+}
+
+.navbar__brand {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Mobile first: tabs are hidden, the burger menu is used instead */
+.navbar__tabs {
+  display: none;
+}
+
+.navbar__list {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar__tab {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+}
+
+.navbar__tab:hover {
+  background: var(--color-primary-light);
+}
+
+/* 48rem = 768px (CSS variables can't be used in media queries) */
+@media (min-width: 48rem) {
+  .navbar__tabs {
+    display: block;
+    flex: 1;
+  }
+}
